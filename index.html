@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roadmap IA Arquitectura</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #0ea5e9;
+            --accent: #f59e0b;
+            --bg: #0f172a;
+            --bg-card: #1e293b;
+            --bg-card-hover: #334155;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #334155;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            padding: 3rem 0 4rem;
+            background: linear-gradient(135deg, var(--bg) 0%, #1e1b4b 100%);
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+
+        .roadmap {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .phase {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .phase::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+
+        .phase:hover {
+            background: var(--bg-card-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.15);
+        }
+
+        .phase-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .phase-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .phase-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .phase-icon {
+            font-size: 1.8rem;
+            margin-right: 0.5rem;
+        }
+
+        .phase-content {
+            padding-left: 1rem;
+        }
+
+        .subsection {
+            margin-bottom: 1.5rem;
+        }
+
+        .subsection:last-child {
+            margin-bottom: 0;
+        }
+
+        .subsection h4 {
+            color: var(--secondary);
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .subsection h4::before {
+            content: '▸';
+            color: var(--accent);
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 1rem;
+        }
+
+        li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+        }
+
+        li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        li strong {
+            color: var(--text);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        td {
+            color: var(--text-muted);
+        }
+
+        tr:hover td {
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .code-block {
+            background: #0d1117;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            color: #7ee787;
+        }
+
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: rgba(99, 102, 241, 0.05);
+            border-radius: 12px;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .flow-box {
+            background: var(--bg-card);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            text-align: center;
+            min-width: 140px;
+        }
+
+        .flow-box .icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .flow-box .label {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .flow-box .sublabel {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .flow-arrow {
+            font-size: 2rem;
+            color: var(--accent);
+        }
+
+        .quote {
+            background: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.5rem;
+            border-radius: 0 8px 8px 0;
+            color: var(--text-muted);
+            font-style: italic;
+            margin: 1rem 0;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .mini-card {
+            background: rgba(99, 102, 241, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+
+        .mini-card h5 {
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .mini-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .phase {
+                padding: 1.5rem;
+            }
+
+            .phase-title {
+                font-size: 1.2rem;
+            }
+
+            .flow-diagram {
+                flex-direction: column;
+            }
+
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🚀 Roadmap IA Arquitectura</h1>
+            <p>Hoja de ruta para la adopción de Inteligencia Artificial en el equipo de Arquitectura</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="roadmap">
+
+            <!-- 1. Formación -->
+            <section class="phase">
+                <div class="phase-header">
+                    <div class="phase-number">1</div>
+                    <h2 class="phase-title"><span class="phase-icon">📚</span> Formación y Cultura IA</h2>
+                </div>
+                <div class="phase-content">
+                    <p style="color: var(--text-muted); margin-bottom: 1rem;">Capacitación del equipo en herramientas y metodologías de IA.</p>
+                    <ul>
+                        <li><strong>Formación interna</strong> por parte del equipo de Arquitectura</li>
+                        <li><strong>Recursos externos</strong> (YouTube, cursos online) para cultura general</li>
+                        <li><strong>Evangelización</strong> dentro de la organización</li>
+                        <li><strong>Prompting avanzado</strong> y uso de generadores de prompts</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 2. Herramientas -->
+            <section class="phase">
+                <div class="phase-header">
+                    <div class="phase-number">2</div>
+                    <h2 class="phase-title"><span class="phase-icon">🛠️</span> Herramientas de Desarrollo</h2>
+                </div>
+                <div class="phase-content">
+                    <div class="grid-2">
+                        <div class="subsection">
+                            <h4>Editores de Código con IA</h4>
+                            <table>
+                                <tr><th>Editor</th><th>Descripción</th></tr>
+                                <tr><td>VS Code</td><td>Con extensiones (Copilot, Continue)</td></tr>
+                                <tr><td>IntelliJ</td><td>Integración con asistentes de IA</td></tr>
+                                <tr><td>Cursor</td><td>Editor nativo con IA integrada</td></tr>
+                                <tr><td>Cline</td><td>Agente autónomo en VS Code</td></tr>
+                            </table>
+                        </div>
+                        <div class="subsection">
+                            <h4>CLI de IA</h4>
+                            <table>
+                                <tr><th>Herramienta</th><th>Uso principal</th></tr>
+                                <tr><td>Claude Code</td><td>Desarrollo asistido por Claude</td></tr>
+                                <tr><td>Open Code</td><td>CLI open source</td></tr>
+                                <tr><td>Copilot CLI</td><td>Asistente de GitHub</td></tr>
+                                <tr><td>Gemini CLI</td><td>CLI de Google</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="subsection" style="margin-top: 1.5rem;">
+                        <h4>Generadores de Prompts</h4>
+                        <ul>
+                            <li><strong>MCP</strong> para generar prompts personalizados</li>
+                            <li><a href="https://taoprompt.com/" target="_blank">TaoPrompt</a></li>
+                            <li><a href="https://www.autoprompt.cc/" target="_blank">AutoPrompt</a></li>
+                            <li><a href="https://www.promptcowboy.ai/" target="_blank">PromptCowboy</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. Configuración de Agentes -->
+            <section class="phase">
+                <div class="phase-header">
+                    <div class="phase-number">3</div>
+                    <h2 class="phase-title"><span class="phase-icon">🤖</span> Configuración de Agentes</h2>
+                </div>
+                <div class="phase-content">
+                    <div class="subsection">
+                        <h4>Ficheros de Configuración</h4>
+                        <table>
+                            <tr><th>Fichero</th><th>Propósito</th></tr>
+                            <tr><td><code>AGENTS.md</code></td><td>Define comportamiento y reglas del agente</td></tr>
+                            <tr><td><code>PLAN.md</code></td><td>Planificación de tareas complejas</td></tr>
+                            <tr><td><code>SKILLS.md</code></td><td>Habilidades y comandos disponibles</td></tr>
+                        </table>
+                    </div>
+                    <div class="subsection">
+                        <h4>Buenas Prácticas</h4>
+                        <ul>
+                            <li>Inserción automática de contexto (ej: comando de OpenCode)</li>
+                            <li>Dividir código extenso en fragmentos manejables</li>
+                            <li>Definir comandos reutilizables</li>
+                        </ul>
+                    </div>
+                    <div class="subsection">
+                        <h4>Ejemplo de Comando Personalizado</h4>
+                        <div class="code-block">
+Analiza y corrige el issue de GitHub: $ARGUMENTS
+
+Pasos:
+1. Obtener detalles con `gh issue view`
+2. Analizar el problema
+3. Buscar ficheros relevantes
+4. Implementar cambios
+5. Ejecutar tests
+6. Verificar linting y tipos
+7. Crear commit descriptivo
+8. Crear PR
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. Generación de Código -->
+            <section class="phase">
+                <div class="phase-header">
+                    <div class="phase-number">4</div>
+                    <h2 class="phase-title"><span class="phase-icon">⚙️</span> Generación de Código</h2>
+                </div>
+                <div class="phase-content">
+                    <div class="subsection">
+                        <h4>Generación Automática</h4>
+                        <ul>
+                            <li><strong>Arquetipos:</strong> Generación de proyectos base con estructura predefinida</li>
+                            <li><strong>Desde Jiras:</strong> Convertir historias de usuario en código inicial</li>
+                            <li><strong>Tests de integración:</strong> Énfasis en cobertura de pruebas</li>
+                        </ul>
+                    </div>
+                    <div class="subsection">
+                        <h4>Código Antiguo vs Nuevo</h4>
+                        <div class="quote">
+                            ¿Qué hacer cuando el contexto define buenas prácticas pero el código existente no las sigue?
+                        </div>
+                        <p style="color: var(--text-muted);"><strong style="color: var(--accent);">Recomendación:</strong> Seguir el patrón existente del proyecto para mantener consistencia.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. Migraciones -->
+            <section class="phase">
+                <div class="phase-header">
+                    <div class="phase-number">5</div>
+                    <h2 class="phase-title"><span class="phase-icon">🔄</span> Migraciones y Actualizaciones</h2>
+                </div>
+                <div class="phase-content">
+                    <div class="grid-2">
+                        <div class="mini-card">
+                            <h5>Actualización de Frameworks</h5>
+                            <ul>
+                                <li>Generar pruebas E2E antes de migrar</li>
+                                <li>Utilizar guías de migración como contexto</li>
+                                <li><strong>Automatización:</strong> Crear PRs automáticas al detectar nuevas versiones</li>
+                            </ul>
+                        </div>
+                        <div class="mini-card">
+                            <h5>Marcos de Trabajo</h5>
+                            <ul>
+                                <li>Agente versátil que consume documentación de Confluence/GitHub</li>
+                                <li>Soporte para diferentes versiones del arquetipo</li>
+                                <li>Refactorización de: <span class="badge">BFFs</span><span class="badge">Microservicios</span><span class="badge">Front</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. Infraestructura IA -->
+            <section class="phase">
+                <div class="phase-header">
+                    <div class="phase-number">6</div>
+                    <h2 class="phase-title"><span class="phase-icon">🔗</span> Infraestructura IA</h2>
+                </div>
+                <div class="phase-content">
+                    <div class="grid-2">
+                        <div class="mini-card">
+                            <h5>Memoria Compartida</h5>
+                            <p>Compartir contexto y aprendizajes entre agentes para mejorar la coherencia.</p>
+                        </div>
+                        <div class="mini-card">
+                            <h5>Modelo Propio</h5>
+                            <p>Evaluar según caso de uso específico. Considerar costes vs beneficios.</p>
+                        </div>
+                        <div class="mini-card">
+                            <h5>SDK de IA para Microservicios</h5>
+                            <p>Proveer herramientas y SDKs para integrar modelos de IA en los microservicios.</p>
+                        </div>
+                        <div class="mini-card">
+                            <h5>Embeddings</h5>
+                            <p>Uso de vectores para búsqueda semántica y RAG.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7. Documentación -->
+            <section class="phase">
+                <div class="phase-header">
+                    <div class="phase-number">7</div>
+                    <h2 class="phase-title"><span class="phase-icon">📊</span> Documentación Automática</h2>
+                </div>
+                <div class="phase-content">
+                    <div class="subsection">
+                        <h4>Generación de Diagramas</h4>
+                        <ul>
+                            <li><strong>UML, C4, etc.</strong> generados automáticamente</li>
+                            <li>Desde historias de usuario</li>
+                            <li>Desde código existente</li>
+                            <li><strong>Actualización continua</strong> con cada commit</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 8. Diseño a Código -->
+            <section class="phase">
+                <div class="phase-header">
+                    <div class="phase-number">8</div>
+                    <h2 class="phase-title"><span class="phase-icon">🎨</span> Flujo de Diseño a Código</h2>
+                </div>
+                <div class="phase-content">
+                    <div class="subsection">
+                        <h4>Penpot + OpenCode + Cypress</h4>
+                        <div class="flow-diagram">
+                            <div class="flow-box">
+                                <div class="icon">🎨</div>
+                                <div class="label">Penpot</div>
+                                <div class="sublabel">Diseño</div>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-box">
+                                <div class="icon">🤖</div>
+                                <div class="label">IA (Ollama)</div>
+                                <div class="sublabel">Generación</div>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-box">
+                                <div class="icon">✅</div>
+                                <div class="label">Cypress</div>
+                                <div class="sublabel">Validación</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="subsection">
+                        <h4>Flujo Automatizado</h4>
+                        <ul>
+                            <li>Crear diseños en Penpot (iteración IA o manual)</li>
+                            <li>Analizar imagen con modelo de visión (Ollama)</li>
+                            <li>Generar código usando CSS de Penpot + análisis</li>
+                            <li>Validar automáticamente con Cypress</li>
+                        </ul>
+                    </div>
+                    <div class="subsection">
+                        <h4>Configuración</h4>
+                        <ul>
+                            <li><code>AGENTS.md</code> específico para prototipado</li>
+                            <li><code>AGENTS.md</code> específico para generación de código</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 9. Revisión de Código -->
+            <section class="phase">
+                <div class="phase-header">
+                    <div class="phase-number">9</div>
+                    <h2 class="phase-title"><span class="phase-icon">🔍</span> Revisión de Código</h2>
+                </div>
+                <div class="phase-content">
+                    <div class="subsection">
+                        <h4>Asignación Automática de PRs</h4>
+                        <ul>
+                            <li>Asignar revisores según el contexto del cambio</li>
+                            <li>Posibilidad de usar modelo especializado en code review</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer>
+        <p>Roadmap IA Arquitectura • 2026</p>
+    </footer>
+</body>
+</html>
